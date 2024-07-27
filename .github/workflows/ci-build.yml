@@ -66,7 +66,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{ env.JAVA_VERSION_UNIT_TEST}}
-          distribution: ${{ env.JAVA_VERSION_UNIT_TEST}}
+          distribution: ${{ env.JAVA_DISTRIBUTION}}
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
       - name: Cache SonarQube packages
