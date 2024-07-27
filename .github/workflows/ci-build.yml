@@ -84,7 +84,7 @@ jobs:
         with:
           args:
             -Dsonar.organization=doublehaodev
-            -Dsonar.projectKey=carepulse-veins
+            -Dsonar.projectKey=DoubleHaoDev_carepulse-veins
             -Dsonar.junit.reportPaths='build/test-results.test'
             -Dsonar.coverage.jacoco.xmlReportPaths='build/jacoco/jacoco.xml'
 
