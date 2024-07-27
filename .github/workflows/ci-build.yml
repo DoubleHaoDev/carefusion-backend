@@ -19,75 +19,6 @@ env:
 concurrency:
   group: "carepulse-ci-${{github.ref}}"
   cancel-in-progress: true
-#jobs:
-#  compile:
-#    name: Compile
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          fetch-depth: '0'
-#          lfs: true
-#          ssh-key: "${{ secrets.SSH_KEY_GITHUB}}"
-#          submodules: true
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: ${{env.JAVA_VERSION}}
-#          distribution: ${{env.JAVA_DISTRIBUTION}}
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
-#
-#      - name: Compile
-#        run: ./gradlew classes testClasses
-#
-#      - name: Root Gradle Dependency Submission
-#        if: ${{ github.ref_name == 'develop' || github.ref_name == 'master'}}
-#        uses: mikepenz/gradle-dependency-submission@v0.8.4
-#        with:
-#          correlator: 'gradle'
-#          gradle-build-module: |-
-#            :
-#          gradle-build-configuration: |-
-#            compileClasspath
-#  sonarCloudScan:
-#    name: "SonarCloud Scan"
-#    runs-on: ubuntu-latest
-#    needs: compile
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          fetch-depth: '0'
-#          lfs: true
-#          ssh-key: "${{ secrets.SSH_KEY_GITHUB }}"
-#          submodules: true
-#
-#      - name: Set up SDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: ${{ env.JAVA_VERSION_UNIT_TEST}}
-#          distribution: ${{ env.JAVA_DISTRIBUTION}}
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
-#      - name: Cache SonarQube packages
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.sonar/cache
-#          key: ${{ runner.os }}-sonar
-#          restore-keys: ${{ runner.os }}-sonar
-#      - name: Sonar Analyze
-#        uses: sonarsource/sonarcloud-github-action@v2.3.0
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-##          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-#        with:
-#          args:
-#            -Dsonar.organization=doublehaodev
-#            -Dsonar.projectKey=DoubleHaoDev_carepulse-veins
-#            -Dsonar.junit.reportPaths='build/test-results.test'
-#            -Dsonar.coverage.jacoco.xmlReportPaths='build/jacoco/jacoco.xml'
-
 
 jobs:
   build:
@@ -119,3 +50,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
         run: ./gradlew build sonar --info
+  checkstyle:
+    name: "Style Check"
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{env.JAVA_VERSION}}
+          distribution: ${{env.JAVA_DISTRIBUTION}}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.11.0
