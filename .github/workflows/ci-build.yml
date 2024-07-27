@@ -43,7 +43,7 @@ jobs:
 
       - name: Root Gradle Dependency Submission
         if: ${{ github.ref_name == 'develop' || github.ref_name == 'master'}}
-        uses: mikepenz/gradle-depency-submission@v0.8.4
+        uses: mikepenz/gradle-dependency-submission@v0.8.4
         with:
           correlator: 'gradle'
           gradle-build-module: |-
