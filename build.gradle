@@ -27,15 +27,16 @@ repositories {
 }
 
 dependencies {
-	annotationProcessor 'org.inferred:freebuilder:2.8.0'
+	runtimeOnly 'org.postgresql:postgresql'
 	implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+	annotationProcessor 'org.inferred:freebuilder:2.8.0'
 	compileOnly 'org.inferred:freebuilder:2.8.0'
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	runtimeOnly 'org.postgresql:postgresql'
 
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 	compileOnly "org.mapstruct:mapstruct:1.5.3.Final"
