@@ -49,8 +49,7 @@ class PatientApiV1Test extends AbstractApiTest {
   }
 
   @AfterEach
-  void tearDown() {
-  }
+  void tearDown() {}
 
 
   @Test
@@ -71,7 +70,7 @@ class PatientApiV1Test extends AbstractApiTest {
   }
 
   private ResultMatcher[] matchPatientDto() {
-    return new ResultMatcher[]{jsonPath("$.uuid").value(notNullValue()),
+    return new ResultMatcher[] {jsonPath("$.uuid").value(notNullValue()),
         jsonPath("$.id").value(2L)};
   }
 
