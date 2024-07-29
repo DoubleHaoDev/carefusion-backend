@@ -11,8 +11,7 @@ public abstract class BaseSoftDeleteModel extends BaseModel {
   @Column(name = "deleted_at")
   private ZonedDateTime deletedAt;
 
-  public BaseSoftDeleteModel() {
-  }
+  public BaseSoftDeleteModel() {}
 
   public ZonedDateTime getDeletedAt() {
     return deletedAt;
