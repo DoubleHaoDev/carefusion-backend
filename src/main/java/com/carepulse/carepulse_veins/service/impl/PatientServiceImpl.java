@@ -28,7 +28,6 @@ public class PatientServiceImpl implements PatientService {
   public PatientDto getPatient(UUID patientUuid) {
     Patient patient = patientDao.findByUuid(patientUuid)
         .orElseThrow(() -> new PatientNotFoundException(patientUuid));
-    PatientDto patientDto = patientMapper.mapPatientToPatientDto(patient);
-    return patientDto;
+    return patientMapper.mapPatientToPatientDto(patient);
   }
 }

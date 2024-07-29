@@ -11,4 +11,8 @@ public class PatientNotFoundException extends RuntimeException {
     super("Patient for patient uuid: " + patientUuid);
     this.patientUuid = patientUuid;
   }
+
+  public UUID getPatientUuid() {
+    return patientUuid;
+  }
 }
