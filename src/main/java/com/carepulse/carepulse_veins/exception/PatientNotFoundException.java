@@ -3,6 +3,7 @@ package com.carepulse.carepulse_veins.exception;
 import java.util.UUID;
 
 public class PatientNotFoundException extends RuntimeException {
+
   private static final Long serialVersionUID = 1L;
   private final UUID patientUuid;
 

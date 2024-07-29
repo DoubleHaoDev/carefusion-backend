@@ -2,16 +2,17 @@ package com.carepulse.carepulse_veins.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
 public abstract class BaseSoftDeleteModel extends BaseModel {
+
   @Column(name = "deleted_at")
   private ZonedDateTime deletedAt;
 
-  public BaseSoftDeleteModel() {}
+  public BaseSoftDeleteModel() {
+  }
 
   public ZonedDateTime getDeletedAt() {
     return deletedAt;

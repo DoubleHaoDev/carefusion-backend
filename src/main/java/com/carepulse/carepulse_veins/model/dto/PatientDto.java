@@ -2,14 +2,19 @@ package com.carepulse.carepulse_veins.model.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.annotation.Nullable;
-import java.util.UUID;
 import java.time.ZonedDateTime;
+import java.util.UUID;
 import org.inferred.freebuilder.FreeBuilder;
 
 
 @FreeBuilder
 @JsonDeserialize(builder = PatientDto.Builder.class)
 public interface PatientDto {
+
+  static Builder builder() {
+    return new Builder();
+  }
+
   @Nullable
   Long getId();
 
@@ -30,10 +35,6 @@ public interface PatientDto {
 
   class Builder extends PatientDto_Builder {
 
-  }
-
-  static Builder builder() {
-    return new Builder();
   }
 
 }

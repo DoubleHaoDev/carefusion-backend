@@ -7,13 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
 public abstract class BaseModel {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", unique = true, nullable = false)
