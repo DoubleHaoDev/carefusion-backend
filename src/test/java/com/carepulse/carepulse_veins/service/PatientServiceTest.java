@@ -1,5 +1,8 @@
-package com.carepulse.carepulse_veins;
+package com.carepulse.carepulse_veins.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.mockito.Mockito.when;
 
 import com.carepulse.carepulse_veins.dao.PatientDao;
 import com.carepulse.carepulse_veins.exception.PatientNotFoundException;
@@ -8,6 +11,8 @@ import com.carepulse.carepulse_veins.mapping.PatientMapperImpl;
 import com.carepulse.carepulse_veins.model.dto.PatientDto;
 import com.carepulse.carepulse_veins.model.entity.Patient;
 import com.carepulse.carepulse_veins.service.impl.PatientServiceImpl;
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,20 +21,14 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class PatientServiceTest {
+
+  @Spy
+  PatientMapper patientMapper = new PatientMapperImpl();
   @Mock
   private PatientDao patientDao;
   private Patient patient;
-  @Spy
-  PatientMapper patientMapper = new PatientMapperImpl();
   @InjectMocks
   private PatientServiceImpl patientService;
   private UUID patientUuid;

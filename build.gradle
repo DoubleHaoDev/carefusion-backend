@@ -67,18 +67,25 @@ task style {
 	}
 }
 
+project.tasks["sonarqube"].dependsOn jacocoTestReport
+
 sonar {
 	properties {
 		property "sonar.projectKey", "DoubleHaoDev_carepulse-veins"
 		property "sonar.organization", "doublehaodev"
 		property "sonar.host.url", "https://sonarcloud.io"
 		property "sonar.exclusions", "/src/main/java/com/carepulse/carepulse_veins/model/**"
+		property "sonar.coverage.jacoco.xmlReportsPath", "${project.layout.buildDirectory}/reports/jacoco/jacocoTestReport.xml"
 	}
 }
+
+test.finalizedBy jacocoTestReport
 
 jacocoTestReport {
 	reports {
 		xml.required = true
+		html.required = true
+		csv.required = true
 	}
 }
 
