@@ -10,7 +10,7 @@ plugins {
 	id "jacoco"
 }
 
-group = 'com.carepulse'
+group = 'com.carefusion'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -19,7 +19,7 @@ java {
 }
 
 springBoot {
-	mainClass = "com.carepulse.carepulse_veins.CarepulseVeinsApplication.java"
+	mainClass = "com.carefusion.carefusion_backend.CareFusionBackendApplication.java"
 }
 
 repositories {
@@ -78,7 +78,7 @@ sonar {
 		property "sonar.projectKey", "DoubleHaoDev_carepulse-veins"
 		property "sonar.organization", "doublehaodev"
 		property "sonar.host.url", "https://sonarcloud.io"
-		property "sonar.exclusions", "/src/main/java/com/carepulse/carepulse_veins/model/**"
+		property "sonar.exclusions", "/src/main/java/com/carefusion/carefusion_backend/model/**"
 		property "sonar.coverage.jacoco.xmlReportsPath", "${project.layout.buildDirectory}/reports/jacoco/jacocoTestReport.xml"
 	}
 }

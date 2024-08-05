@@ -1,5 +1,5 @@
-# carepulse-veins
-Springboot backend for carepulse app
+# CareFusion-Backend
+Springboot backend for carefusion app
 
 Formatter and style checker
 
