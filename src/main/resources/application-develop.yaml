@@ -8,6 +8,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  banner:
+    location: banner.txt
 
 server:
   port: 8080
