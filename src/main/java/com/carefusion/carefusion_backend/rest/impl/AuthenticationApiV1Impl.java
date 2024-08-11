@@ -8,9 +8,9 @@ import com.carefusion.carefusion_backend.security.service.JwtService;
 import com.carefusion.carefusion_backend.service.impl.AuthenticationService;
 import javax.inject.Inject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class AuthenticationApiV1Impl implements AuthenticationApiV1 {
   private final JwtService jwtService;
 

@@ -6,9 +6,9 @@ import com.carefusion.carefusion_backend.service.PatientService;
 import java.util.UUID;
 import javax.inject.Inject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class PatientApiV1Impl implements PatientApiV1 {
 
   private final PatientService patientService;
