@@ -17,7 +17,7 @@ env:
 #  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 concurrency:
-  group: "carepulse-ci-${{github.ref}}"
+  group: "carefusion-ci-${{github.ref}}"
   cancel-in-progress: true
 
 jobs:

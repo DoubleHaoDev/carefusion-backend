@@ -75,7 +75,7 @@ project.tasks["sonarqube"].dependsOn jacocoTestReport
 
 sonar {
 	properties {
-		property "sonar.projectKey", "DoubleHaoDev_carepulse-veins"
+		property "sonar.projectKey", "DoubleHaoDev_carefusion-backend"
 		property "sonar.organization", "doublehaodev"
 		property "sonar.host.url", "https://sonarcloud.io"
 		property "sonar.exclusions", "/src/main/java/com/carefusion/carefusion_backend/model/**"
