@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: "org.postgresql.Driver"
-    url: jdbc:postgresql://localhost:5432/carepulse_development
-    username: carepulse_admin
-    password: carepulse
+    url: jdbc:postgresql://localhost:5432/carefusion_development
+    username: postgres
+    password: carefusion
   jpa:
     properties:
       hibernate:
