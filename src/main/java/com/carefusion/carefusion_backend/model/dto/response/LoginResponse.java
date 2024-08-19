@@ -9,6 +9,8 @@ public class LoginResponse {
 
   private UUID userUuid;
 
+  private boolean isEmailConfirmed;
+
   public String getToken() {
     return token;
   }
@@ -31,5 +33,13 @@ public class LoginResponse {
 
   public void setUserUuid(UUID userUuid) {
     this.userUuid = userUuid;
+  }
+
+  public boolean isEmailConfirmed() {
+    return isEmailConfirmed;
+  }
+
+  public void setIsEmailConfirmed(boolean isEmailConfirmed) {
+    this.isEmailConfirmed = isEmailConfirmed;
   }
 }
