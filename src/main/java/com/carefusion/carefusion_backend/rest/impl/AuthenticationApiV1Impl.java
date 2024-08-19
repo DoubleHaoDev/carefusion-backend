@@ -37,6 +37,7 @@ public class AuthenticationApiV1Impl implements AuthenticationApiV1 {
     LoginResponse loginResponse = new LoginResponse();
     loginResponse.setToken(jwtToken);
     loginResponse.setExpiresIn(jwtService.getExpirationTime());
+    loginResponse.setUserUuid(authenticatedUser.getUuid());
 
     return ResponseEntity.ok(loginResponse);
   }
