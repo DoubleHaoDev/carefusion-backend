@@ -26,6 +26,8 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "email_confirmed")
+  private boolean emailConfirmed;
 
   public UUID getUuid() {
     return uuid;
@@ -50,6 +52,14 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public boolean isEmailConfirmed() {
+    return emailConfirmed;
+  }
+
+  public void setEmailConfirmed(boolean emailConfirmed) {
+    this.emailConfirmed = emailConfirmed;
   }
 
   @Override
