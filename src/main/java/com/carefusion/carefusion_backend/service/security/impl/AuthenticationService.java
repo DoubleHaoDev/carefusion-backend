@@ -65,12 +65,7 @@ public class AuthenticationService {
     token.setTokenType(TokenType.BEARER);
     token.setExpired(false);
     token.setRevoked(false);
-    try {
-      tokenRepository.save(token);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
+    tokenRepository.save(token);
   }
 
 }
