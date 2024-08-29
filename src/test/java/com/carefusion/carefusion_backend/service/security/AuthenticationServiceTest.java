@@ -1,13 +1,18 @@
 package com.carefusion.carefusion_backend.service.security;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.carefusion.carefusion_backend.dao.UserDao;
 import com.carefusion.carefusion_backend.dao.security.TokenDao;
 import com.carefusion.carefusion_backend.model.dto.UserDto;
 import com.carefusion.carefusion_backend.model.dto.response.AuthenticationResponseDto;
 import com.carefusion.carefusion_backend.model.entity.User;
+import com.carefusion.carefusion_backend.model.entity.security.Token;
 import com.carefusion.carefusion_backend.service.security.impl.AuthenticationService;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,11 +20,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 class AuthenticationServiceTest {
 
@@ -42,6 +48,9 @@ class AuthenticationServiceTest {
 
   @Mock
   private User userDetails;
+
+  @Mock
+  private PasswordEncoder passwordEncoder;
 
   @BeforeEach
   public void setUp() {
@@ -82,5 +91,27 @@ class AuthenticationServiceTest {
     assertThrows(BadCredentialsException.class, () -> {
       authenticationService.authenticate(userDto);
     });
+  }
+
+  @Test
+  void test_signup_success() {
+    UserDto userDto = new UserDto();
+    userDto.setUsername("user@example.com");
+    userDto.setPassword("password");
+
+    User user = new User();
+    user.setUsername(userDto.getUsername());
+    user.setPassword("encodedPassword");
+
+    when(passwordEncoder.encode(userDto.getPassword())).thenReturn("encodedPassword");
+    when(jwtService.generateToken(user)).thenReturn("jwtToken");
+    when(userDao.save(any(User.class))).thenReturn(user);
+
+    AuthenticationResponseDto response = authenticationService.signup(userDto);
+
+    assertNotNull(response);
+    assertEquals("jwtToken", response.getToken());
+    verify(userDao).save(any(User.class));
+    verify(tokenDao).save(any(Token.class));
   }
 }
