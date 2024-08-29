@@ -10,12 +10,10 @@ import java.lang.reflect.Field;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Value;
 
 
-public class JwtServiceTest {
+class JwtServiceTest {
 
   private User userDetails;
 
@@ -25,7 +23,7 @@ public class JwtServiceTest {
   private String token;
 
   @BeforeEach
-  public void setUp() throws Exception {
+  void setUp() throws Exception {
     MockitoAnnotations.openMocks(this);
     Field secretKeyField = JwtService.class.getDeclaredField("secretKey");
     secretKeyField.setAccessible(true);
@@ -41,20 +39,20 @@ public class JwtServiceTest {
   }
 
   @Test
-  public void test_generateToken() {
+  void test_generateToken() {
     when(userDetails.getUsername()).thenReturn("user@example.com");
     String generatedToken = jwtService.generateToken(userDetails);
     assertNotNull(generatedToken);
   }
 
   @Test
-  public void test_extractUsername() {
+  void test_extractUsername() {
     String username = jwtService.extractUsername(token);
     assertEquals("user@example.com", username);
   }
 
   @Test
-  public void test_isTokenValid() {
+  void test_isTokenValid() {
     boolean isValid = jwtService.isTokenValid(token, userDetails);
     assertTrue(isValid);
   }
