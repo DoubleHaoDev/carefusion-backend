@@ -79,7 +79,7 @@ class LogoutServiceTest {
 
     when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
     when(tokenRepository.findByJwtToken(token)).thenReturn(java.util.Optional.empty());
-
+    logoutService.logout(request, response, authentication);
     verify(tokenRepository, never()).save(any(Token.class));
   }
 }
