@@ -2,6 +2,7 @@ package com.carefusion.carefusion_backend.service.security.impl;
 
 import com.carefusion.carefusion_backend.dao.UserDao;
 import com.carefusion.carefusion_backend.dao.security.TokenDao;
+import com.carefusion.carefusion_backend.exception.UserNotFoundException;
 import com.carefusion.carefusion_backend.model.dto.UserDto;
 import com.carefusion.carefusion_backend.model.dto.response.AuthenticationResponseDto;
 import com.carefusion.carefusion_backend.model.entity.User;
@@ -49,7 +50,7 @@ public class AuthenticationService {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(input.getUsername(), input.getPassword()));
     User user = userRepository.findByUsername(input.getUsername())
-        .orElseThrow(() -> new RuntimeException("User not found"));
+        .orElseThrow(() -> new UserNotFoundException(input.getUsername()));
     String jwtToken = jwtService.generateToken(user);
 
     tokenRepository.deleteByUserId(user.getId());
