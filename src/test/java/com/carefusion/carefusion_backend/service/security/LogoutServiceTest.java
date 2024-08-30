@@ -2,6 +2,7 @@ package com.carefusion.carefusion_backend.service.security;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,15 +23,12 @@ class LogoutServiceTest {
 
   @Mock
   private TokenDao tokenRepository;
-
   @InjectMocks
   private LogoutService logoutService;
   @Mock
   private HttpServletRequest request;
-
   @Mock
   private HttpServletResponse response;
-
   @Mock
   private Authentication authentication;
 
@@ -58,7 +56,25 @@ class LogoutServiceTest {
   }
 
   @Test
-  void test_logout_invalidToken() {
+  void test_logout_no_auth_header() {
+    when(request.getHeader("Authorization")).thenReturn("WRONG_TYPE ");
+
+    logoutService.logout(request, response, authentication);
+    verify(tokenRepository, never()).findByJwtToken(anyString());
+    verify(tokenRepository, never()).save(any(Token.class));
+  }
+
+  @Test
+  void test_logout_invalid_auth_header() {
+    when(request.getHeader("Authorization")).thenReturn(null);
+
+    logoutService.logout(request, response, authentication);
+    verify(tokenRepository, never()).findByJwtToken(anyString());
+    verify(tokenRepository, never()).save(any(Token.class));
+  }
+
+  @Test
+  void test_logout_no_valid_token() {
     String token = "invalidToken";
 
     when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
