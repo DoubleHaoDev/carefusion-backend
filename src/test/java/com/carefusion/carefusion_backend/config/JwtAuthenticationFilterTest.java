@@ -120,7 +120,7 @@ class JwtAuthenticationFilterTest {
   }
 
   @Test
-  void test_validAuthHeader_validTokenNull() throws ServletException, IOException {
+  void test_validAuthHeader_invalidToken_no_security_context() throws ServletException, IOException {
     try (MockedStatic<SecurityContextHolder> securityContextHolderMockedStatic =
         mockStatic(SecurityContextHolder.class)) {
       securityContextHolderMockedStatic.when(SecurityContextHolder::getContext)
