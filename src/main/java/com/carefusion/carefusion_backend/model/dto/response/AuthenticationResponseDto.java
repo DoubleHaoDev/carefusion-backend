@@ -1,15 +1,13 @@
 package com.carefusion.carefusion_backend.model.dto.response;
 
-import java.util.UUID;
+import java.util.Objects;
 
-public class LoginResponse {
+public class AuthenticationResponseDto {
   private String token;
 
-  private long expiresIn;
-
-  private UUID userUuid;
-
-  private boolean isEmailConfirmed;
+  public AuthenticationResponseDto(String token) {
+    this.token = token;
+  }
 
   public String getToken() {
     return token;
@@ -19,27 +17,26 @@ public class LoginResponse {
     this.token = token;
   }
 
-  public long getExpiresIn() {
-    return expiresIn;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    AuthenticationResponseDto that = (AuthenticationResponseDto) o;
+    return Objects.equals(token, that.token);
   }
 
-  public void setExpiresIn(long expiresIn) {
-    this.expiresIn = expiresIn;
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(token);
   }
 
-  public UUID getUserUuid() {
-    return userUuid;
-  }
-
-  public void setUserUuid(UUID userUuid) {
-    this.userUuid = userUuid;
-  }
-
-  public boolean isEmailConfirmed() {
-    return isEmailConfirmed;
-  }
-
-  public void setIsEmailConfirmed(boolean isEmailConfirmed) {
-    this.isEmailConfirmed = isEmailConfirmed;
+  @Override
+  public String toString() {
+    return "AuthenticationResponseDto{" + "token='" + token + '\'' + '}';
   }
 }

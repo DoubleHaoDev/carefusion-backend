@@ -1,11 +1,14 @@
 package com.carefusion.carefusion_backend.model.entity;
 
+import com.carefusion.carefusion_backend.model.entity.security.Token;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +31,9 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
 
   @Column(name = "email_confirmed")
   private boolean emailConfirmed;
+
+  @OneToMany(mappedBy = "user")
+  private List<Token> jwtTokens;
 
   public UUID getUuid() {
     return uuid;
@@ -62,6 +68,14 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     this.emailConfirmed = emailConfirmed;
   }
 
+  public List<Token> getJwtTokens() {
+    return jwtTokens;
+  }
+
+  public void setJwtTokens(List<Token> jwtTokens) {
+    this.jwtTokens = jwtTokens;
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
@@ -85,5 +99,40 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    if (!super.equals(o)) {
+      return false;
+    }
+
+    User user = (User) o;
+    return emailConfirmed == user.emailConfirmed && Objects.equals(uuid, user.uuid)
+        && Objects.equals(username, user.username) && Objects.equals(password, user.password)
+        && Objects.equals(jwtTokens, user.jwtTokens);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = super.hashCode();
+    result = 31 * result + Objects.hashCode(uuid);
+    result = 31 * result + Objects.hashCode(username);
+    result = 31 * result + Objects.hashCode(password);
+    result = 31 * result + Boolean.hashCode(emailConfirmed);
+    result = 31 * result + Objects.hashCode(jwtTokens);
+    return result;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" + "uuid=" + uuid + ", username='" + username + '\'' + ", password='" + password
+        + '\'' + ", emailConfirmed=" + emailConfirmed + ", jwtTokens=" + jwtTokens + '}';
   }
 }

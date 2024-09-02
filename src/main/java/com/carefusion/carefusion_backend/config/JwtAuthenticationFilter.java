@@ -1,6 +1,7 @@
 package com.carefusion.carefusion_backend.config;
 
-import com.carefusion.carefusion_backend.security.service.JwtService;
+import com.carefusion.carefusion_backend.dao.security.TokenDao;
+import com.carefusion.carefusion_backend.service.security.JwtService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,27 +10,25 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-  private final HandlerExceptionResolver handlerExceptionResolver;
-
+  private static final String HEADER_STARTS_WITH = "Bearer ";
   private final JwtService jwtService;
   private final UserDetailsService userDetailsService;
+  private final TokenDao tokenDao;
 
   public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService,
-      HandlerExceptionResolver handlerExceptionResolver) {
+      TokenDao tokenDao) {
     this.jwtService = jwtService;
     this.userDetailsService = userDetailsService;
-    this.handlerExceptionResolver = handlerExceptionResolver;
+    this.tokenDao = tokenDao;
   }
 
   @Override
@@ -37,33 +36,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
       throws ServletException, IOException {
     final String authHeader = request.getHeader("Authorization");
-
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+    if (authHeader == null || !authHeader.startsWith(HEADER_STARTS_WITH)) {
       filterChain.doFilter(request, response);
       return;
     }
 
-    try {
-      final String jwt = authHeader.substring(7);
-      final String userEmail = jwtService.extractUsername(jwt);
+    final String jwt = authHeader.substring(HEADER_STARTS_WITH.length());
+    final String userEmail = jwtService.extractUsername(jwt);
 
-      Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+      boolean isTokenValid = tokenDao.findByJwtToken(jwt)
+          .map(token -> !token.isExpired() && !token.isRevoked()).orElse(false);
+      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+            userDetails, null, userDetails.getAuthorities());
 
-      if (userEmail != null && authentication == null) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-
-        if (jwtService.isTokenValid(jwt, userDetails)) {
-          UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-              userDetails, null, userDetails.getAuthorities());
-
-          authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-          SecurityContextHolder.getContext().setAuthentication(authToken);
-        }
+        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authToken);
       }
-
-      filterChain.doFilter(request, response);
-    } catch (Exception exception) {
-      handlerExceptionResolver.resolveException(request, response, null, exception);
     }
+    filterChain.doFilter(request, response);
   }
 }
