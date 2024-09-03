@@ -42,8 +42,8 @@ public class AuthenticationService {
     user.setLastname(input.getLastname());
     user.setUsername(input.getUsername());
     user.setPassword(passwordEncoder.encode(input.getPassword()));
-    String jwtToken = jwtService.generateToken(user);
     User savedUser = userRepository.save(user);
+    String jwtToken = jwtService.generateToken(savedUser);
     saveUserToken(savedUser, jwtToken);
     return new AuthenticationResponseDto(jwtToken);
   }

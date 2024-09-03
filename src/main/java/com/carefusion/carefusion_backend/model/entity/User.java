@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,7 +22,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "Users")
 public class User extends BaseSoftDeleteModel implements UserDetails {
 
-  @Column(name = "uuid", insertable = false, updatable = false)
+  @Column(name = "uuid", insertable = false, updatable = false, columnDefinition = "BINARY(16)")
+  @Generated(GenerationTime.ALWAYS)
   private UUID uuid;
 
   @Column(name = "first_name")
