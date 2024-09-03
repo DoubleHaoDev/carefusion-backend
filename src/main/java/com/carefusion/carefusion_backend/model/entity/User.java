@@ -23,6 +23,11 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
   @Column(name = "uuid", insertable = false, updatable = false)
   private UUID uuid;
 
+  @Column(name = "first_name")
+  private String firstname;
+  @Column(name = "last_name")
+  private String lastname;
+
   @Column(name = "username")
   private String username;
 
@@ -76,6 +81,22 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     this.jwtTokens = jwtTokens;
   }
 
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
@@ -116,7 +137,8 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     User user = (User) o;
     return emailConfirmed == user.emailConfirmed && Objects.equals(uuid, user.uuid)
         && Objects.equals(username, user.username) && Objects.equals(password, user.password)
-        && Objects.equals(jwtTokens, user.jwtTokens);
+        && Objects.equals(jwtTokens, user.jwtTokens) && Objects.equals(firstname, user.firstname)
+        && Objects.equals(lastname, user.lastname);
   }
 
   @Override
@@ -127,6 +149,8 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     result = 31 * result + Objects.hashCode(password);
     result = 31 * result + Boolean.hashCode(emailConfirmed);
     result = 31 * result + Objects.hashCode(jwtTokens);
+    result = 31 * result + Objects.hashCode(firstname);
+    result = 31 * result + Objects.hashCode(lastname);
     return result;
   }
 

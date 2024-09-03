@@ -38,6 +38,8 @@ public class AuthenticationService {
 
   public AuthenticationResponseDto signup(UserDto input) {
     User user = new User();
+    user.setFirstname(input.getFirstname());
+    user.setLastname(input.getLastname());
     user.setUsername(input.getUsername());
     user.setPassword(passwordEncoder.encode(input.getPassword()));
     String jwtToken = jwtService.generateToken(user);
