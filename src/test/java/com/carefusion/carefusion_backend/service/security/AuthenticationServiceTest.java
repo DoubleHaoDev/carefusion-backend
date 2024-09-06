@@ -98,10 +98,14 @@ class AuthenticationServiceTest {
     UserDto userDto = new UserDto();
     userDto.setUsername("user@example.com");
     userDto.setPassword("password");
+    userDto.setFirstname("John");
+    userDto.setLastname("Doe");
 
     User user = new User();
     user.setUsername(userDto.getUsername());
     user.setPassword("encodedPassword");
+    user.setFirstname(userDto.getFirstname());
+    user.setLastname(userDto.getLastname());
 
     when(passwordEncoder.encode(userDto.getPassword())).thenReturn("encodedPassword");
     when(jwtService.generateToken(user)).thenReturn("jwtToken");

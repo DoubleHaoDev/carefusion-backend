@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,8 +22,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "Users")
 public class User extends BaseSoftDeleteModel implements UserDetails {
 
-  @Column(name = "uuid", insertable = false, updatable = false)
+  @Column(name = "uuid", insertable = false, updatable = false, columnDefinition = "BINARY(16)")
+  @Generated(GenerationTime.ALWAYS)
   private UUID uuid;
+
+  @Column(name = "first_name")
+  private String firstname;
+  @Column(name = "last_name")
+  private String lastname;
 
   @Column(name = "username")
   private String username;
@@ -34,6 +42,9 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
 
   @OneToMany(mappedBy = "user")
   private List<Token> jwtTokens;
+
+  @Column(name = "user_type")
+  private String userType;
 
   public UUID getUuid() {
     return uuid;
@@ -76,6 +87,30 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     this.jwtTokens = jwtTokens;
   }
 
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
+
+  public String getUserType() {
+    return userType;
+  }
+
+  public void setUserType(String userType) {
+    this.userType = userType;
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
@@ -116,7 +151,8 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     User user = (User) o;
     return emailConfirmed == user.emailConfirmed && Objects.equals(uuid, user.uuid)
         && Objects.equals(username, user.username) && Objects.equals(password, user.password)
-        && Objects.equals(jwtTokens, user.jwtTokens);
+        && Objects.equals(jwtTokens, user.jwtTokens) && Objects.equals(firstname, user.firstname)
+        && Objects.equals(lastname, user.lastname) && Objects.equals(userType, user.userType);
   }
 
   @Override
@@ -127,12 +163,17 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     result = 31 * result + Objects.hashCode(password);
     result = 31 * result + Boolean.hashCode(emailConfirmed);
     result = 31 * result + Objects.hashCode(jwtTokens);
+    result = 31 * result + Objects.hashCode(firstname);
+    result = 31 * result + Objects.hashCode(lastname);
+    result = 31 * result + Objects.hashCode(userType);
     return result;
   }
 
   @Override
   public String toString() {
-    return "User{" + "uuid=" + uuid + ", username='" + username + '\'' + ", password='" + password
-        + '\'' + ", emailConfirmed=" + emailConfirmed + ", jwtTokens=" + jwtTokens + '}';
+    return "User{" + "uuid=" + uuid + ", firstname='" + firstname + '\'' + ", lastname='" + lastname
+        + '\'' + ", username='" + username + '\'' + ", password='" + password + '\''
+        + ", emailConfirmed=" + emailConfirmed + ", jwtTokens=" + jwtTokens + ", userType='"
+        + userType + '\'' + '}';
   }
 }

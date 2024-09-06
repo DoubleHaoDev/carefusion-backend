@@ -30,8 +30,19 @@ class AuthenticationApiV1Test extends AbstractApiTest {
     when(authenticationServiceMock.authenticate(any(UserDto.class))).thenReturn(response);
 
     mockMvc.perform(post("/v1/authentication/signup").contentType(MediaType.APPLICATION_JSON)
-        .content("{\"username\":\"a@b.com\",\"password\":\"password\"}")
+        .content("{\"username\":\"a@b.com\",\"password\":\"password\""
+            + ",\"firstname\":\"John\",\"lastname\":\"Doe\"}")
         .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+  }
+
+  @Test
+  void test_register_field_missing() throws Exception {
+    AuthenticationResponseDto response = new AuthenticationResponseDto("jwtToken");
+    when(authenticationServiceMock.authenticate(any(UserDto.class))).thenReturn(response);
+
+    mockMvc.perform(post("/v1/authentication/signup").contentType(MediaType.APPLICATION_JSON)
+        .content("{\"username\":\"a@b.com\",\"password\":\"password\"}")
+        .accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
   }
 
   @Test

@@ -18,6 +18,8 @@ To create a new user, call `/v1/authentication/signup` endpoint with POST method
 For instance,
 ```json
 {
+  "firstname": "John",
+  "lastname": "Doe",
   "username": "a@c.com",
   "password": "!aA123456789"
 }

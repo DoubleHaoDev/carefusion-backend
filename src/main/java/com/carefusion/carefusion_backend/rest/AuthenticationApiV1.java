@@ -2,6 +2,7 @@ package com.carefusion.carefusion_backend.rest;
 
 import com.carefusion.carefusion_backend.model.dto.UserDto;
 import com.carefusion.carefusion_backend.model.dto.response.AuthenticationResponseDto;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AuthenticationApiV1 {
 
   @PostMapping("/signup")
-  ResponseEntity<AuthenticationResponseDto> register(@RequestBody UserDto registerUserDto);
+  ResponseEntity<AuthenticationResponseDto> register(@Valid @RequestBody UserDto registerUserDto);
 
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponseDto> authenticate(@RequestBody UserDto loginUserDto);
