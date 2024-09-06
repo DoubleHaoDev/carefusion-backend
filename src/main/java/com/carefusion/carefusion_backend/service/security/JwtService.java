@@ -40,7 +40,8 @@ public class JwtService {
     claims.put("role", userDetails.getAuthorities());
     claims.put("userId", userDetails.getId());
     claims.put("userUuid", userDetails.getUuid());
-
+    claims.put("emailConfirmed", userDetails.isEmailConfirmed());
+    claims.put("userType", userDetails.getUserType());
     return generateToken(claims, userDetails);
   }
 

@@ -43,6 +43,9 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
   @OneToMany(mappedBy = "user")
   private List<Token> jwtTokens;
 
+  @Column(name = "user_type")
+  private String userType;
+
   public UUID getUuid() {
     return uuid;
   }
@@ -100,6 +103,14 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     this.lastname = lastname;
   }
 
+  public String getUserType() {
+    return userType;
+  }
+
+  public void setUserType(String userType) {
+    this.userType = userType;
+  }
+
   @Override
   public boolean isAccountNonExpired() {
     return true;
@@ -141,7 +152,7 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     return emailConfirmed == user.emailConfirmed && Objects.equals(uuid, user.uuid)
         && Objects.equals(username, user.username) && Objects.equals(password, user.password)
         && Objects.equals(jwtTokens, user.jwtTokens) && Objects.equals(firstname, user.firstname)
-        && Objects.equals(lastname, user.lastname);
+        && Objects.equals(lastname, user.lastname) && Objects.equals(userType, user.userType);
   }
 
   @Override
@@ -154,12 +165,15 @@ public class User extends BaseSoftDeleteModel implements UserDetails {
     result = 31 * result + Objects.hashCode(jwtTokens);
     result = 31 * result + Objects.hashCode(firstname);
     result = 31 * result + Objects.hashCode(lastname);
+    result = 31 * result + Objects.hashCode(userType);
     return result;
   }
 
   @Override
   public String toString() {
-    return "User{" + "uuid=" + uuid + ", username='" + username + '\'' + ", password='" + password
-        + '\'' + ", emailConfirmed=" + emailConfirmed + ", jwtTokens=" + jwtTokens + '}';
+    return "User{" + "uuid=" + uuid + ", firstname='" + firstname + '\'' + ", lastname='" + lastname
+        + '\'' + ", username='" + username + '\'' + ", password='" + password + '\''
+        + ", emailConfirmed=" + emailConfirmed + ", jwtTokens=" + jwtTokens + ", userType='"
+        + userType + '\'' + '}';
   }
 }
