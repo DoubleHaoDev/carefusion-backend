@@ -31,22 +31,22 @@ public class Patient extends BaseSoftDeleteModel {
   private String gender;
 
   @Column(name = "address")
-  private Long address;
+  private String address;
 
   @Column(name = "occupation")
-  private Long occupation;
+  private String occupation;
 
   @Column(name = "emergency_contact_name")
-  private Long emergencyContactName;
+  private String emergencyContactName;
 
   @Column(name = "family_medical_history")
-  private Long familyMedicalHistory;
+  private String familyMedicalHistory;
 
   @Column(name = "past_medical_history")
-  private Long pastMedicalHistory;
+  private String pastMedicalHistory;
 
   @Column(name = "identification_type")
-  private Long identificationType;
+  private String identificationType;
 
   @Column(name = "treatment_concent")
   private Boolean treatmentConcent;
@@ -102,51 +102,51 @@ public class Patient extends BaseSoftDeleteModel {
     this.gender = gender;
   }
 
-  public Long getAddress() {
+  public String getAddress() {
     return address;
   }
 
-  public void setAddress(Long address) {
+  public void setAddress(String address) {
     this.address = address;
   }
 
-  public Long getOccupation() {
+  public String getOccupation() {
     return occupation;
   }
 
-  public void setOccupation(Long occupation) {
+  public void setOccupation(String occupation) {
     this.occupation = occupation;
   }
 
-  public Long getEmergencyContactName() {
+  public String getEmergencyContactName() {
     return emergencyContactName;
   }
 
-  public void setEmergencyContactName(Long emergencyContactName) {
+  public void setEmergencyContactName(String emergencyContactName) {
     this.emergencyContactName = emergencyContactName;
   }
 
-  public Long getFamilyMedicalHistory() {
+  public String getFamilyMedicalHistory() {
     return familyMedicalHistory;
   }
 
-  public void setFamilyMedicalHistory(Long familyMedicalHistory) {
+  public void setFamilyMedicalHistory(String familyMedicalHistory) {
     this.familyMedicalHistory = familyMedicalHistory;
   }
 
-  public Long getPastMedicalHistory() {
+  public String getPastMedicalHistory() {
     return pastMedicalHistory;
   }
 
-  public void setPastMedicalHistory(Long pastMedicalHistory) {
+  public void setPastMedicalHistory(String pastMedicalHistory) {
     this.pastMedicalHistory = pastMedicalHistory;
   }
 
-  public Long getIdentificationType() {
+  public String getIdentificationType() {
     return identificationType;
   }
 
-  public void setIdentificationType(Long identificationType) {
+  public void setIdentificationType(String identificationType) {
     this.identificationType = identificationType;
   }
 
@@ -185,26 +185,36 @@ public class Patient extends BaseSoftDeleteModel {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    if (!super.equals(o)) {
-      return false;
-    }
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    if (!super.equals(o)) return false;
     Patient patient = (Patient) o;
-    return Objects.equals(uuid, patient.uuid) && Objects.equals(personId, patient.personId);
+    return Objects.equals(uuid, patient.uuid) && Objects.equals(personId, patient.personId) && Objects.equals(primaryPhone, patient.primaryPhone) && Objects.equals(birthdate, patient.birthdate) && Objects.equals(gender, patient.gender) && Objects.equals(address, patient.address) && Objects.equals(occupation, patient.occupation) && Objects.equals(emergencyContactName, patient.emergencyContactName) && Objects.equals(familyMedicalHistory, patient.familyMedicalHistory) && Objects.equals(pastMedicalHistory, patient.pastMedicalHistory) && Objects.equals(identificationType, patient.identificationType) && Objects.equals(treatmentConcent, patient.treatmentConcent) && Objects.equals(disclosureConcent, patient.disclosureConcent) && Objects.equals(privacyConcent, patient.privacyConcent) && Objects.equals(userId, patient.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), uuid, personId);
+    return Objects.hash(super.hashCode(), uuid, personId, primaryPhone, birthdate, gender, address, occupation, emergencyContactName, familyMedicalHistory, pastMedicalHistory, identificationType, treatmentConcent, disclosureConcent, privacyConcent, userId);
   }
 
   @Override
   public String toString() {
-    return "Patient{" + "uuid=" + uuid + ", personId=" + personId + '}';
+    return "Patient{" +
+            "uuid=" + uuid +
+            ", personId=" + personId +
+            ", primaryPhone='" + primaryPhone + '\'' +
+            ", birthdate='" + birthdate + '\'' +
+            ", gender='" + gender + '\'' +
+            ", address=" + address +
+            ", occupation=" + occupation +
+            ", emergencyContactName=" + emergencyContactName +
+            ", familyMedicalHistory=" + familyMedicalHistory +
+            ", pastMedicalHistory=" + pastMedicalHistory +
+            ", identificationType=" + identificationType +
+            ", treatmentConcent=" + treatmentConcent +
+            ", disclosureConcent=" + disclosureConcent +
+            ", privacyConcent=" + privacyConcent +
+            ", userId=" + userId +
+            '}';
   }
 }
