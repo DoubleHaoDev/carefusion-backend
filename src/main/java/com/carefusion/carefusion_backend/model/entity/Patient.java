@@ -185,36 +185,43 @@ public class Patient extends BaseSoftDeleteModel {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    if (!super.equals(o)) return false;
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    if (!super.equals(o))
+      return false;
     Patient patient = (Patient) o;
-    return Objects.equals(uuid, patient.uuid) && Objects.equals(personId, patient.personId) && Objects.equals(primaryPhone, patient.primaryPhone) && Objects.equals(birthdate, patient.birthdate) && Objects.equals(gender, patient.gender) && Objects.equals(address, patient.address) && Objects.equals(occupation, patient.occupation) && Objects.equals(emergencyContactName, patient.emergencyContactName) && Objects.equals(familyMedicalHistory, patient.familyMedicalHistory) && Objects.equals(pastMedicalHistory, patient.pastMedicalHistory) && Objects.equals(identificationType, patient.identificationType) && Objects.equals(treatmentConcent, patient.treatmentConcent) && Objects.equals(disclosureConcent, patient.disclosureConcent) && Objects.equals(privacyConcent, patient.privacyConcent) && Objects.equals(userId, patient.userId);
+    return Objects.equals(uuid, patient.uuid) && Objects.equals(personId, patient.personId)
+        && Objects.equals(primaryPhone, patient.primaryPhone)
+        && Objects.equals(birthdate, patient.birthdate) && Objects.equals(gender, patient.gender)
+        && Objects.equals(address, patient.address)
+        && Objects.equals(occupation, patient.occupation)
+        && Objects.equals(emergencyContactName, patient.emergencyContactName)
+        && Objects.equals(familyMedicalHistory, patient.familyMedicalHistory)
+        && Objects.equals(pastMedicalHistory, patient.pastMedicalHistory)
+        && Objects.equals(identificationType, patient.identificationType)
+        && Objects.equals(treatmentConcent, patient.treatmentConcent)
+        && Objects.equals(disclosureConcent, patient.disclosureConcent)
+        && Objects.equals(privacyConcent, patient.privacyConcent)
+        && Objects.equals(userId, patient.userId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode(), uuid, personId, primaryPhone, birthdate, gender, address, occupation, emergencyContactName, familyMedicalHistory, pastMedicalHistory, identificationType, treatmentConcent, disclosureConcent, privacyConcent, userId);
+    return Objects.hash(super.hashCode(), uuid, personId, primaryPhone, birthdate, gender, address,
+        occupation, emergencyContactName, familyMedicalHistory, pastMedicalHistory,
+        identificationType, treatmentConcent, disclosureConcent, privacyConcent, userId);
   }
 
   @Override
   public String toString() {
-    return "Patient{" +
-            "uuid=" + uuid +
-            ", personId=" + personId +
-            ", primaryPhone='" + primaryPhone + '\'' +
-            ", birthdate='" + birthdate + '\'' +
-            ", gender='" + gender + '\'' +
-            ", address=" + address +
-            ", occupation=" + occupation +
-            ", emergencyContactName=" + emergencyContactName +
-            ", familyMedicalHistory=" + familyMedicalHistory +
-            ", pastMedicalHistory=" + pastMedicalHistory +
-            ", identificationType=" + identificationType +
-            ", treatmentConcent=" + treatmentConcent +
-            ", disclosureConcent=" + disclosureConcent +
-            ", privacyConcent=" + privacyConcent +
-            ", userId=" + userId +
-            '}';
+    return "Patient{" + "uuid=" + uuid + ", personId=" + personId + ", primaryPhone='"
+        + primaryPhone + '\'' + ", birthdate='" + birthdate + '\'' + ", gender='" + gender + '\''
+        + ", address=" + address + ", occupation=" + occupation + ", emergencyContactName="
+        + emergencyContactName + ", familyMedicalHistory=" + familyMedicalHistory
+        + ", pastMedicalHistory=" + pastMedicalHistory + ", identificationType="
+        + identificationType + ", treatmentConcent=" + treatmentConcent + ", disclosureConcent="
+        + disclosureConcent + ", privacyConcent=" + privacyConcent + ", userId=" + userId + '}';
   }
 }
