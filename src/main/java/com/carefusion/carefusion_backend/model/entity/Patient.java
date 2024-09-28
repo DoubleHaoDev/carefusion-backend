@@ -185,12 +185,15 @@ public class Patient extends BaseSoftDeleteModel {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
-    if (!super.equals(o))
+    }
+    if (!super.equals(o)) {
       return false;
+    }
     Patient patient = (Patient) o;
     return Objects.equals(uuid, patient.uuid) && Objects.equals(personId, patient.personId)
         && Objects.equals(primaryPhone, patient.primaryPhone)
