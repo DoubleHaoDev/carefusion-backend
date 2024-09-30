@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class Patient extends BaseSoftDeleteModel {
   private String primaryPhone;
 
   @Column(name = "birthdate")
-  private ZonedDateTime birthdate;
+  private LocalDate birthdate;
 
   @Column(name = "gender")
   private String gender;
@@ -88,11 +88,11 @@ public class Patient extends BaseSoftDeleteModel {
     this.primaryPhone = primaryPhone;
   }
 
-  public ZonedDateTime getBirthdate() {
+  public LocalDate getBirthdate() {
     return birthdate;
   }
 
-  public void setBirthdate(ZonedDateTime birthdate) {
+  public void setBirthdate(LocalDate birthdate) {
     this.birthdate = birthdate;
   }
 
