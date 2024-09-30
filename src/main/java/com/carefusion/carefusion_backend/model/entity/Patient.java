@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
+import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -25,7 +27,7 @@ public class Patient extends BaseSoftDeleteModel {
   private String primaryPhone;
 
   @Column(name = "birthdate")
-  private String birthdate;
+  private ZonedDateTime birthdate;
 
   @Column(name = "gender")
   private String gender;
@@ -86,11 +88,11 @@ public class Patient extends BaseSoftDeleteModel {
     this.primaryPhone = primaryPhone;
   }
 
-  public String getBirthdate() {
+  public ZonedDateTime getBirthdate() {
     return birthdate;
   }
 
-  public void setBirthdate(String birthdate) {
+  public void setBirthdate(ZonedDateTime birthdate) {
     this.birthdate = birthdate;
   }
 
